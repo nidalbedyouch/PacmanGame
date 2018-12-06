@@ -1,11 +1,19 @@
 package model;
 
-import java.util.ArrayList;
-
 
 public class PacmanGame extends Game {
-	
 	Maze maze;
+	public Maze getMaze() {
+		return maze;
+	}
+
+
+
+	public void setMaze(Maze maze) {
+		this.maze = maze;
+	}
+
+
 
 	public PacmanGame(int maxTours) {
 		super(maxTours);
@@ -42,6 +50,15 @@ public class PacmanGame extends Game {
 		// TODO Auto-generated method stub
 		
 	}
+
+
+
+	@Override
+	public boolean islegalMove(PacmanGame p, Maze m) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	
 	
 	
 	

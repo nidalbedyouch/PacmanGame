@@ -1,21 +1,27 @@
 package view;
 
-
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
 import java.awt.Rectangle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
+import javax.swing.Action;
+import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
 import controller.Controller;
 
 import model.Game;
+import model.Maze;
 import model.Observateur;
+import model.PacmanGame;
 
 
 public class ViewGame implements Observateur{
-	JFrame frame;
+	static JFrame frame;
 	JLabel text;
 	Game game;
 	Controller controllerGame;
@@ -38,14 +44,40 @@ public class ViewGame implements Observateur{
 		frame.setLocation(x, y);
       
 		text=new JLabel("Current Turn : "+0,JLabel.CENTER);
-		frame.add(text);
-		frame.setVisible(true);
+		
+			try {
+				frame.add(new PanelPacmanGame(new Maze("/home/nbedyouch/workspace/projetPacman/layout/bigSafeSearch.lay")));
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			frame.setVisible(true);
+		
+		
 	}
 	
 	@Override
 	public void actualiser() {
 		text.setText("Turn : " + game.nbTours());
 	}
-	
+	public static void choosePacmanLayout(Game game) {
+        JButton open = new JButton();
+        JFileChooser mazeFileChooser = new JFileChooser(new java.io.File("/home/nbedyouch/workspace/projetPacman/layout"));
+        mazeFileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+        Action details = mazeFileChooser.getActionMap().get("viewTypeDetails");
+        details.actionPerformed(null);
+        if (mazeFileChooser.showOpenDialog(open) == JFileChooser.APPROVE_OPTION) {
+            try {
+                Maze m = new Maze(mazeFileChooser.getSelectedFile().getAbsolutePath());
+                ((PacmanGame) game).setMaze(m);
+				frame.add(new PanelPacmanGame(((PacmanGame) game).getMaze()));
+                frame.setVisible(true);
+                System.out.print("painted");
+            } catch (Exception ex) {
+            	ex.printStackTrace();
+                Logger.getLogger(ViewGame.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
 	
 }

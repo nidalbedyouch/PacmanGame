@@ -23,5 +23,10 @@ public class SimpleGame extends Game{
 		System.out.println("SimpleGame is Over");
 		this.notifierObservateur();
 	}
+	@Override
+	public boolean islegalMove(PacmanGame p, Maze m) {
+		// TODO Auto-generated method stub
+		return false;
+	}
 
 }

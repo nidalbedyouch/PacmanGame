@@ -125,6 +125,7 @@ public abstract class Game implements Runnable,Sujet{
 	public abstract void initializeGame();
 	public abstract void takeTurn();
 	public abstract void gameOver();
+	public abstract boolean islegalMove(PacmanGame p,Maze m);
 	
 	
 }
