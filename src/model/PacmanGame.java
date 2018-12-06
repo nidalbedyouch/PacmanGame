@@ -1,7 +1,11 @@
 package model;
 
+import java.util.ArrayList;
+
 
 public class PacmanGame extends Game {
+	
+	Maze maze;
 
 	public PacmanGame(int maxTours) {
 		super(maxTours);
