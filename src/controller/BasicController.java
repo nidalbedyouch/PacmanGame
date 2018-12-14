@@ -1,5 +1,7 @@
 package controller;
 
+import java.io.File;
+
 import view.ViewCommande;
 import view.ViewGame;
 import model.Game;
@@ -39,6 +41,12 @@ public class BasicController implements Controller {
 	@Override
 	public void step() {
 		game.step();
+		
+	}
+
+	@Override
+	public void changeMaze(File choiceLayout) {
+		// TODO Auto-generated method stub
 		
 	}
 

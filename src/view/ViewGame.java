@@ -21,8 +21,8 @@ import model.PacmanGame;
 
 
 public class ViewGame implements Observateur{
-	static JFrame frame;
-	JLabel text;
+	public static JFrame frame;
+	PanelPacmanGame labyrinth;
 	Game game;
 	Controller controllerGame;
 	
@@ -42,42 +42,18 @@ public class ViewGame implements Observateur{
 		int x = (int) rect.getMaxX() - frame.getWidth();
 		int y = 0;
 		frame.setLocation(x, y);
-      
-		text=new JLabel("Current Turn : "+0,JLabel.CENTER);
-		
-			try {
-				frame.add(new PanelPacmanGame(new Maze("/home/nbedyouch/workspace/projetPacman/layout/bigSafeSearch.lay")));
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			frame.setVisible(true);
-		
-		
+		labyrinth=new PanelPacmanGame(((PacmanGame) game).getMaze());
+		frame.add(labyrinth);
+        frame.setVisible(true);
+        System.out.print("painted");
 	}
 	
 	@Override
 	public void actualiser() {
-		text.setText("Turn : " + game.nbTours());
+		labyrinth.m=((PacmanGame) game).getMaze();
+		labyrinth.repaint();
+		frame.setVisible(true);
 	}
-	public static void choosePacmanLayout(Game game) {
-        JButton open = new JButton();
-        JFileChooser mazeFileChooser = new JFileChooser(new java.io.File("/home/nbedyouch/workspace/projetPacman/layout"));
-        mazeFileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
-        Action details = mazeFileChooser.getActionMap().get("viewTypeDetails");
-        details.actionPerformed(null);
-        if (mazeFileChooser.showOpenDialog(open) == JFileChooser.APPROVE_OPTION) {
-            try {
-                Maze m = new Maze(mazeFileChooser.getSelectedFile().getAbsolutePath());
-                ((PacmanGame) game).setMaze(m);
-				frame.add(new PanelPacmanGame(((PacmanGame) game).getMaze()));
-                frame.setVisible(true);
-                System.out.print("painted");
-            } catch (Exception ex) {
-            	ex.printStackTrace();
-                Logger.getLogger(ViewGame.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-    }
+	
 	
 }

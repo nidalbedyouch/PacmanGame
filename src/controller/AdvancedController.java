@@ -1,6 +1,10 @@
 package controller;
 
+import java.io.File;
+
 import model.Game;
+import model.Maze;
+import model.PacmanGame;
 import view.ViewCommande;
 import view.ViewGame;
 
@@ -63,4 +67,20 @@ public class AdvancedController implements Controller {
 		if(game.nbTours() >= game.maxTours())
 			this.viewCommande.switchBtnStep(false);
 	}
+
+	@Override
+	public void changeMaze(File choiceLayout) {
+		 try {
+		    	((PacmanGame)game).setMaze(new Maze(choiceLayout.toString()));
+		    	
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		
+	}
+
+	
+	
+	
 }

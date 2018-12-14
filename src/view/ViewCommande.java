@@ -1,16 +1,20 @@
 package view;
 
 
+import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
 import javax.swing.event.ChangeEvent;
@@ -19,11 +23,15 @@ import javax.swing.event.ChangeListener;
 import controller.Controller;
 
 import model.Game;
+import model.Maze;
 import model.Observateur;
+import model.PacmanGame;
 
 public class ViewCommande implements Observateur{
 	private JFrame frame;
+	private JPanel panelLayouts ;
 	private JPanel buttonPanel,bottomPanel,mainPanel,sliderPanel;
+	private JComboBox<File> layouts;
 	private JButton btnRestart,btnRun,btnStep,btnPause;
 	private JSlider slider;
 	private JLabel sliderLabel,turnLabel;
@@ -73,7 +81,7 @@ public class ViewCommande implements Observateur{
 		sliderPanel.setLayout(new GridLayout(2,1));
 		
 		//create slider
-		slider=new JSlider(JSlider.HORIZONTAL,0,10,2);
+		slider=new JSlider(JSlider.HORIZONTAL,1,10,2);
 		slider.setMinorTickSpacing(1);
 		slider.setMajorTickSpacing(1);
 		slider.setPaintTicks(true);
@@ -97,6 +105,13 @@ public class ViewCommande implements Observateur{
 		mainPanel.add(buttonPanel);
 		mainPanel.add(bottomPanel);
 		
+		//choose maze 
+		File directory = new File("/home/nbedyouch/workspace/projetPacman/layout");
+		layouts = new JComboBox<>(directory.listFiles());
+	    layouts.setSelectedIndex(6); //8 par défault
+	    panelLayouts = new JPanel(new BorderLayout());
+	    panelLayouts.add(new JLabel("Choix map :"), BorderLayout.NORTH);
+	    panelLayouts.add(layouts);
 		
 		//ajouter les listener 
 		btnRestart.addActionListener(new ActionListener(){
@@ -129,10 +144,21 @@ public class ViewCommande implements Observateur{
 				controller_game.setTime(1000/slider.getValue());
 			}
 		});
+		layouts.addActionListener(new ActionListener (){
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				File choiceLayout = (File) layouts.getSelectedItem();
+			    controller_game.changeMaze(choiceLayout);
+			}
+		});
 		
-		
+        
+	    
+	    frame.setLayout(new BorderLayout());
 		frame.add(mainPanel);
+		frame.add(panelLayouts,BorderLayout.SOUTH);
 		frame.setVisible(true);
+		
 	}
 
 	public void switchBtnRestart(boolean bool){

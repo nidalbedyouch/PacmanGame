@@ -16,7 +16,6 @@ public abstract class Game implements Runnable,Sujet{
 	
 	public Game(int maxTours){
 		this.maxTours=maxTours;
-		this.init();
 	}
 	public void init(){
 		this.nbTours=0;
@@ -125,7 +124,7 @@ public abstract class Game implements Runnable,Sujet{
 	public abstract void initializeGame();
 	public abstract void takeTurn();
 	public abstract void gameOver();
-	public abstract boolean islegalMove(PacmanGame p,Maze m);
+	public abstract boolean islegalMove(Agent agent,AgentAction action);
 	
 	
 }

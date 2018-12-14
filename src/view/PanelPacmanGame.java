@@ -11,6 +11,11 @@ import model.PositionAgent;
 public class PanelPacmanGame extends JPanel{
 
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
 	private Color wallColor=Color.BLUE;
 	private Color wallColor2=Color.CYAN;
 
